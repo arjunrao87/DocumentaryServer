@@ -22,7 +22,7 @@ function sendToMessenger(recipientId, message) {
             console.log('Error: ', response.body.error);
         }
     });
-}
+};
 
 function printToConsole(message){
   console.log( "Message = "+ message);
