@@ -19,24 +19,13 @@ app.get('/', function (req, res) {
 
 // Facebook Webhook
 app.get('/webhook', function (req, res) {
-    if (req.query['hub.verify_token'] === 'documentary_server_101_verify_token') {
-        res.send(req.query['hub.challenge']);
-    } else {
-        res.send('Invalid verify token');
-    }
+  botFunctions.getHook( req, res );
 });
 
 
 // handler receiving messages
 app.post('/webhook', function (req, res) {
-    var events = req.body.entry[0].messaging;
-    for (i = 0; i < events.length; i++) {
-        var event = events[i];
-        if (event.message && event.message.text) {
-            botFunctions.sendToMessenger(event.sender.id, {text:event.message.text});
-        }
-    }
-    res.sendStatus(200);
+  botFunctions.postHook( req, res );
 });
 
 //------------------------ END OF MESSENGER BOT APIs -----------------------//
