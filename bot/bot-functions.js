@@ -1,8 +1,7 @@
 var request = require('request');
 
 module.exports={
-  sendToMessenger,
-  printToConsole
+  sendToMessenger
 };
 
 // generic function sending messages
@@ -23,7 +22,3 @@ function sendToMessenger(recipientId, message) {
         }
     });
 };
-
-function printToConsole(message){
-  console.log( "Message = "+ message);
-}
