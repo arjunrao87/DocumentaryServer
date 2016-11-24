@@ -1,6 +1,6 @@
-# TestBot
+# DocumentaryServer
 
-## Simple FB Messenger bot that echoes back whatever you type
+## Server infrastructure to help you search documentaries
 
 ### Demo available at
 
@@ -8,12 +8,4 @@ http://m.me/622726197900327
 
 ### Server being run at
 
-https://cryptic-beach-57332.herokuapp.com/
-
-
-
-
-
-#### Credits
-
-http://x-team.com/2016/04/how-to-get-started-with-facebook-messenger-bots/
+https://boiling-wave-58166.herokuapp.com/
