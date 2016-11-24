@@ -2,9 +2,9 @@
 
 ## Server infrastructure to help you search documentaries
 
-### Demo available at
+### FB Bot available at
 
-http://m.me/622726197900327
+https://www.messenger.com/t/200967383642574/
 
 ### Server being run at
 
