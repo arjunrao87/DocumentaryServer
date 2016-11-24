@@ -13,6 +13,7 @@ app.listen((process.env.PORT || 3000));
 app.get('/', function (req, res) {
     res.send('Welcome to the homepage of the Documentary Server');
     console.log( "You have hit the home page" );
+    botFunctions.printToConsole("It works!");
 });
 
 

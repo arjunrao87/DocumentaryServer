@@ -1,5 +1,6 @@
 module.exports={
-  sendToMessenger
+  sendToMessenger,
+  printToConsole
 };
 
 // generic function sending messages
@@ -19,4 +20,8 @@ function sendToMessenger(recipientId, message) {
             console.log('Error: ', response.body.error);
         }
     });
-};
+}
+
+function printToConsole(message){
+  console.log( "Message = "+ message);
+}
