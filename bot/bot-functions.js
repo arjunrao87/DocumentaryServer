@@ -1,3 +1,7 @@
+module.exports={
+  sendToMessenger
+};
+
 // generic function sending messages
 function sendToMessenger(recipientId, message) {
     request({
