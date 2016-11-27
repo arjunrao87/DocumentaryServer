@@ -29,12 +29,12 @@ function postHook( req, res ){
           const sender = event.sender.id;
           const sessionId = findOrCreateSession(sender);
           const {text, attachments} = event.message;
-          console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text ); 
+          console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text );
           if (attachments) {
             sendToMessenger(sender, 'Sorry I can only process text messages for now.')
             .catch(console.error);
           } else if (text) {
-            processWithWit(entry.sender.id, entry.message.text, function (sender, reply) {
+            processWithWit(sender, text, function (sender, reply) {
             sendToMessenger(sender, reply) });
           } else {
             console.log('Received event', JSON.stringify(event));
