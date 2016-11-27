@@ -75,7 +75,8 @@ function processWithWit(sender, message, reply) {
 		reply(sender, message)
 	} else {
 		var sessionId = findOrCreateSession(sender);
-    console.log("processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + sessions[sessionId].context );
+    console.log("processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
+    return;
 		wit.runActions(
 			sessionId, // the user's current session by id
 			message,  // the user's message
