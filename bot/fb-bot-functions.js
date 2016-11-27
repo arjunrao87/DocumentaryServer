@@ -35,7 +35,7 @@ function postHook( req, res ){
             .catch(console.error);
           } else if (text) {
             processWithWit(sender, text, function (sender, reply) {
-            sendToMessenger(sender, reply) });
+              sendToMessenger(sender, reply) });
           } else {
             console.log('Received event', JSON.stringify(event));
           }
@@ -74,7 +74,8 @@ function processWithWit(sender, message, reply) {
 		message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"'
 		reply(sender, message)
 	} else {
-		var sessionId = findOrCreateSession(sender)
+		var sessionId = findOrCreateSession(sender);
+    console.log("processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + sessions[sessionId].context );
 		wit.runActions(
 			sessionId, // the user's current session by id
 			message,  // the user's message
