@@ -1,6 +1,6 @@
 var request = require('request');
 var Config = require('../config');
-var wit = require('./ai/wit').getWit();
+var wit = require('./wit').getWit();
 var sessions = {};
 
 module.exports={

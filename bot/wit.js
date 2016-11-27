@@ -1,7 +1,7 @@
 'use strict'
 
 var Config = require('../config')
-var FB = require('../bot/fb-bot-functions')
+var FB = require('./fb-bot-functions')
 var Wit = require('node-wit').Wit
 var request = require('request')
 
@@ -11,8 +11,10 @@ module.exports = {
 
 // SETUP THE WIT.AI SERVICE
 function getWit() {
-	console.log('Instantiating Wit')
-	return new Wit(Config.WIT_TOKEN, actions,logger, new log.Logger(log.INFO));
+	return new Wit({
+  accessToken: Config.WIT_TOKEN,
+  actions:actions
+	});
 }
 
 var firstEntityValue = function (entities, entity) {
@@ -27,30 +29,30 @@ var firstEntityValue = function (entities, entity) {
 	return typeof val === 'object' ? val.value : val
 }
 
-var actions = {
+const actions = {
 
-	say (sessionId, context, message, cb) {
+	send (request,response) {
 		// Bot testing mode, run cb() and return
-		if (require.main === module) {
-			cb();
-			return;
-		}
-
-		console.log('WIT WANTS TO TALK TO:', context._fbid_)
-		console.log('WIT HAS SOMETHING TO SAY:', message)
-		console.log('WIT HAS A CONTEXT:', context)
-
-		if (checkURLIsImage(message)) {
-			// This is supposed to send a message as 'attachment'
-			// with an extra parameter "true"
-			FB.sendToMessenger(context._fbid_, message);
-		} else {
-			FB.sendToMessenger(context._fbid_, message);
-		}
-		cb();
+		// if (require.main === module) {
+		// 	cb();
+		// 	return;
+		// }
+		//
+		// console.log('WIT WANTS TO TALK TO:', context._fbid_)
+		// console.log('WIT HAS SOMETHING TO SAY:', message)
+		// console.log('WIT HAS A CONTEXT:', context)
+		//
+		// if (checkURLIsImage(message)) {
+		// 	// This is supposed to send a message as 'attachment'
+		// 	// with an extra parameter "true"
+		// 	FB.sendToMessenger(context._fbid_, message);
+		// } else {
+		// 	FB.sendToMessenger(context._fbid_, message);
+		// }
+		// cb();
 	},
 
-	merge(sessionId, context, entities, message, cb) {
+	merge({entities, context, message, sessionId,cb})  {
 		// Reset the recommendation story
 		delete context.getRecommendations;
 
@@ -76,27 +78,30 @@ var actions = {
 		cb(context);
 	},
 
-	error(sessionId, context, error) {
-		console.log(error.message)
+	error(request) {
+		console.log(JSON.stringify( request ))
 	},
 
-	// list of functions Wit.ai can execute
-	['fetch-weather'](sessionId, context, cb) {
-		// Here we can place an API call to a weather service
-		// if (context.loc) {
-		// 	getWeather(context.loc)
-		// 		.then(function (forecast) {
-		// 			context.forecast = forecast || 'sunny'
-		// 		})
-		// 		.catch(function (err) {
-		// 			console.log(err)
-		// 		})
-		// }
-
-		context.forecast = 'Sunny'
-
-		cb(context)
-	},
+	['getRecommendations']( request ){
+		console.log( JSON.stringify( request ) )
+	}
+	// // list of functions Wit.ai can execute
+	// ['fetch-weather'](sessionId, context, cb) {
+	// 	// Here we can place an API call to a weather service
+	// 	// if (context.loc) {
+	// 	// 	getWeather(context.loc)
+	// 	// 		.then(function (forecast) {
+	// 	// 			context.forecast = forecast || 'sunny'
+	// 	// 		})
+	// 	// 		.catch(function (err) {
+	// 	// 			console.log(err)
+	// 	// 		})
+	// 	// }
+	//
+	// 	context.forecast = 'Sunny'
+	//
+	// 	cb(context)
+	// },
 }
 
 // BOT TESTING MODE

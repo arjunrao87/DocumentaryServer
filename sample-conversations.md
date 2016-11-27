@@ -31,6 +31,10 @@
 
 ( Tell me/Give me/What is/I want to (watch/see) ) a (30 min/1 hr/2 hr) documentary like ( Blackfish/Somm ) (on/using) ( Netflix/Hulu/Amazon ) having a ( Rotten Tomatoes/Imdb ) score better than ( 95%/8.0 )
 
+Can I get some recommmendations?
+
+Can I get some recommendations for documentaries?
+
 # Welcome Greetings
 
 Hi there!
