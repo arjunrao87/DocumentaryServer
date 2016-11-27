@@ -1,3 +1,5 @@
+# Documentary Search
+
 ( Tell me/Give me/What is/I want to (watch/see) ) a documentary (now/today/tomorrow/with my friends)
 
 
@@ -28,3 +30,51 @@
 
 
 ( Tell me/Give me/What is/I want to (watch/see) ) a (30 min/1 hr/2 hr) documentary like ( Blackfish/Somm ) (on/using) ( Netflix/Hulu/Amazon ) having a ( Rotten Tomatoes/Imdb ) score better than ( 95%/8.0 )
+
+# Welcome Greetings
+
+Hi there!
+
+Hello Bot!
+
+Hello Docu!
+
+Greetings DocuBot!
+
+# Goodbye Greetings
+
+Bye!
+
+Cya!
+
+Goodbye!
+
+Cya later!
+
+Seeya later!
+
+Seeya!
+
+Byeeeeeeee!
+
+Au Revoir!
+
+Hasta la vista baby!
+
+# Thankfulness
+
+Thanks!
+
+Thank you!
+
+Danke!
+
+Thanks much!
+
+Merci!
+
+Gracias!
+
+Merci beaucoup!
+
+# Genre preference settings

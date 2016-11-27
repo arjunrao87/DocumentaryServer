@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var botFunctions = require('./bot/bot-functions');
+var FB = require('./bot/fb-bot-functions');
 
 var app = express();
 
@@ -11,7 +11,6 @@ app.listen((process.env.PORT || 3000));
 // Server frontpage
 app.get('/', function (req, res) {
     res.send('Welcome to the homepage of the Documentary Server');
-    console.log( "You have hit the home page" );
 });
 
 
@@ -19,13 +18,13 @@ app.get('/', function (req, res) {
 
 // Facebook Webhook
 app.get('/webhook', function (req, res) {
-  botFunctions.getHook( req, res );
+  FB.getHook( req, res );
 });
 
 
 // handler receiving messages
 app.post('/webhook', function (req, res) {
-  botFunctions.postHook( req, res );
+  FB.postHook( req, res );
 });
 
 //------------------------ END OF MESSENGER BOT APIs -----------------------//
