@@ -1,7 +1,7 @@
 'use strict'
 
 var Config = require('../config')
-var FB = require('fb-bot-functions')
+var FB = require('./fb-bot-functions')
 var Wit = require('node-wit').Wit
 var request = require('request')
 
