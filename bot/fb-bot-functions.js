@@ -28,7 +28,7 @@ function postHook( req, res ){
   for (i = 0; i < events.length; i++) {
     var event = events[i];
     if (event.message && event.message.text) {
-      const sender = event.sender.id;
+      const sender = event.recipient.id;
       const sessionId = findOrCreateSession(sender);
       const {text, attachments} = event.message;
       console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text );
