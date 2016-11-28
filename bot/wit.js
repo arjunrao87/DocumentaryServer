@@ -1,7 +1,6 @@
 'use strict'
 
 var Config = require('../config')
-var FB = require('./fb-bot-functions')
 var Wit = require('node-wit').Wit
 var request = require('request')
 
@@ -37,7 +36,7 @@ const actions = {
 		console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
 		const recipientId = request.context._fbid_;
 		if (recipientId !== null) {
-      return FB.sendToMessenger(JSON.stringify(recipientId), JSON.stringify(response.text))
+      return sendToMessenger(JSON.stringify(recipientId), JSON.stringify(response.text))
       .then(() => null)
       .catch((err) => {
         console.error(
@@ -139,3 +138,23 @@ if (require.main === module) {
 var checkURLIsImage = function (url) {
     return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
+
+function sendToMessenger( id, text ) {
+  const body = JSON.stringify({
+    recipient: { id },
+    message: { text },
+  });
+  const qs = 'access_token=' + encodeURIComponent(Config.FB_PAGE_ACCESS_TOKEN);
+  return fetch('https://graph.facebook.com/me/messages?' + qs, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body,
+  })
+  .then(rsp => rsp.json())
+  .then(json => {
+    if (json.error && json.error.message) {
+      throw new Error(json.error.message);
+    }
+    return json;
+  });
+};
