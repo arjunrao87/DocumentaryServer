@@ -21,11 +21,10 @@ function getHook( req, res ){
 }
 
 function postHook( req, res ){
-  const data = req.body;
-  if (data.object === 'page') {
-    data.entry.forEach(entry => {
-      entry.messaging.forEach(event => {
-        if (event.message && !event.message.is_echo) {
+  var events = req.body.entry[0].messaging;
+    for (i = 0; i < events.length; i++) {
+        var event = events[i];
+        if (event.message && event.message.text) {
           const sender = event.sender.id;
           const sessionId = findOrCreateSession(sender);
           const {text, attachments} = event.message;
@@ -39,9 +38,11 @@ function postHook( req, res ){
             console.log('Received event', JSON.stringify(event));
           }
         }
-      });
-    });
-  }
+        else if (event.postback) {
+            console.log("Postback received: " + JSON.stringify(event.postback));
+        }
+    }
+    res.sendStatus(200);
 }
 
 function findOrCreateSession(fbid) {
@@ -72,7 +73,7 @@ function processWithWit(sender, message) {
 	if (message.toUpperCase() === "HELLO" || message.toUpperCase() === "BRUTE") {
 		message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"';
     console.log( "response = " + message);
-		sendToMessenger(sender, message)
+		sendToMessenger(sender, message);
 	} else {
 		var sessionId = findOrCreateSession(sender);
     console.log("processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
