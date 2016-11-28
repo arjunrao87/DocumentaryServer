@@ -30,7 +30,7 @@ function postHook( req, res ){
           const {text, attachments} = event.message;
           console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text );
           if (attachments) {
-            sendToMessenger(sender, 'Sorry I can only process text messages for now.')
+            sendToMessenger(sender, {text:'Sorry I can only process text messages for now.'})
             .catch(console.error);
           } else if (text) {
             processWithWit(sender, text);
@@ -72,12 +72,10 @@ function findOrCreateSession(fbid) {
 function processWithWit(sender, message) {
 	if (message.toUpperCase() === "HELLO" || message.toUpperCase() === "BRUTE") {
 		message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"';
-    console.log( "response = " + message);
 		sendToMessenger(sender, {text:message});
 	} else {
 		var sessionId = findOrCreateSession(sender);
     console.log("processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
-    return;
 		wit.runActions(
 			sessionId, // the user's current session by id
 			message,  // the user's message
