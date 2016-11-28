@@ -8,7 +8,8 @@ module.exports={
   postHook,
   sendToMessenger,
   findOrCreateSession,
-  processWithWit
+  processWithWit,
+  fbMessage
 };
 
 // FB Webhook event handler
