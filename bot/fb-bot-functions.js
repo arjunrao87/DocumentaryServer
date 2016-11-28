@@ -120,7 +120,7 @@ function sendToMessenger( recipientId, message ) {
     });
 };
 
-const fbMessage = (id, text) => {
+function fbMessage(id, text){
   const body = JSON.stringify({
     recipient: { id },
     message: { text },
