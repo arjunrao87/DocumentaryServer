@@ -9,7 +9,6 @@ module.exports={
   sendToMessenger,
   findOrCreateSession,
   processWithWit,
-  fbMessage
 };
 
 // FB Webhook event handler
@@ -75,7 +74,6 @@ function findOrCreateSession(fbid) {
 function processWithWit(sender, message) {
 	if ( message.toUpperCase() === "HELLO" ) {
 		message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"';
-		//sendToMessenger( sender, { text:message } );
     fbMessage( sender, message);
 	} else {
 		var sessionId = findOrCreateSession(sender);
@@ -102,24 +100,6 @@ function processWithWit(sender, message) {
 
 // generic function sending messages
 function sendToMessenger( recipientId, message ) {
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token: Config.FB_PAGE_ACCESS_TOKEN},
-        method: 'POST',
-        json: {
-            recipient: {id: recipientId},
-            message: message,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending message: ', error);
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error);
-        }
-    });
-};
-
-function fbMessage(id, text){
   const body = JSON.stringify({
     recipient: { id },
     message: { text },
