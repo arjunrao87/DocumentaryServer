@@ -101,8 +101,8 @@ function processWithWit(sender, message) {
 // generic function sending messages
 function sendToMessenger( recipientId, message ) {
   const body = JSON.stringify({
-    recipient: { id },
-    message: { text },
+    recipient: { recipientId },
+    message: { message },
   });
   const qs = 'access_token=' + encodeURIComponent(Config.FB_PAGE_ACCESS_TOKEN);
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
