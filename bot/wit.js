@@ -36,7 +36,7 @@ const actions = {
 		console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
 		const recipientId = request.context._fbid_;
 		if (recipientId !== null) {
-      return sendToMessenger(JSON.stringify(recipientId), JSON.stringify(response.text))
+      return sendToMessenger(recipientId, response.text)
       .then(() => null)
       .catch((err) => {
         console.error(
