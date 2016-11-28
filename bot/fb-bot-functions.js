@@ -71,8 +71,9 @@ function findOrCreateSession(fbid) {
 
 function processWithWit(sender, message, reply) {
 	if (message.toUpperCase() === "HELLO" || message.toUpperCase() === "BRUTE") {
-		message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"'
-		reply(sender, message)
+		message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"';
+    console.log( "response = " + message);
+		sendToMessenger(sender, message)
 	} else {
 		var sessionId = findOrCreateSession(sender);
     console.log("processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
