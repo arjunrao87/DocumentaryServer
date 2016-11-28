@@ -36,11 +36,11 @@ const actions = {
 		// Let's retrieve the Facebook user whose session belongs to
 		console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
 		const recipientId = request.context._fbid_;
-		console.log( "Recipiecnt id = "+ recipientId);
-		if (true) {
+		//if (true) {
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
+
       return fbMessage(recipientId, response.text)
       .then(() => null)
       .catch((err) => {
@@ -51,11 +51,12 @@ const actions = {
           err.stack || err
         );
       });
-    } else {
-      console.error('Oops! Couldn\'t find user for session:', sessionId);
-      // Giving the wheel back to our bot
-      return Promise.resolve()
-    }
+    //} 
+		// else {
+    //   console.error('Oops! Couldn\'t find user for session:', sessionId);
+    //   // Giving the wheel back to our bot
+    //   return Promise.resolve()
+    // }
 	},
 
 	merge({entities, context, message, sessionId,cb})  {
