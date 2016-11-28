@@ -32,50 +32,37 @@ var firstEntityValue = function (entities, entity) {
 const actions = {
 
 	send (request,response) {
-		// Bot testing mode, run cb() and return
-		// if (require.main === module) {
-		// 	cb();
-		// 	return;
-		// }
-		//
-		// console.log('WIT WANTS TO TALK TO:', context._fbid_)
-		// console.log('WIT HAS SOMETHING TO SAY:', message)
-		// console.log('WIT HAS A CONTEXT:', context)
-		//
-		// if (checkURLIsImage(message)) {
-		// 	// This is supposed to send a message as 'attachment'
-		// 	// with an extra parameter "true"
-		// 	FB.sendToMessenger(context._fbid_, message);
-		// } else {
-		// 	FB.sendToMessenger(context._fbid_, message);
-		// }
-		// cb();
+		console.log('sending...', JSON.stringify(response));
+		return Promise.resolve();
 	},
 
 	merge({entities, context, message, sessionId,cb})  {
-		// Reset the recommendation story
-		delete context.getRecommendations;
-
-		// Retrive the location entity and store it in the context field
-		var duration = firstEntityValue(entities, 'duration');
-		if (duration) {
-			context.duration = duration;
-		}
-
-		// Retrieve the category
-		var searchQuery = firstEntityValue(entities, 'searchQuery')
-		if (searchQuery) {
-			context.searchQuery = searchQuery;
-		}
-
-		// Retrieve the sentiment
-		var sentiment = firstEntityValue(entities, 'sentiment')
-		if (sentiment) {
-			context.ack = sentiment === 'positive' ? 'Glad your liked it!' : 'Aww, that sucks.'
-		} else {
-			delete context.ack
-		}
-		cb(context);
+		// // Reset the recommendation story
+		// delete context.getRecommendations;
+		//
+		// // Retrive the location entity and store it in the context field
+		// var duration = firstEntityValue(entities, 'duration');
+		// if (duration) {
+		// 	context.duration = duration;
+		// }
+		//
+		// // Retrieve the category
+		// var searchQuery = firstEntityValue(entities, 'searchQuery')
+		// if (searchQuery) {
+		// 	context.searchQuery = searchQuery;
+		// }
+		//
+		// // Retrieve the sentiment
+		// var sentiment = firstEntityValue(entities, 'sentiment')
+		// if (sentiment) {
+		// 	context.ack = sentiment === 'positive' ? 'Glad your liked it!' : 'Aww, that sucks.'
+		// } else {
+		// 	delete context.ack
+		// }
+		// cb(context);
+		return new Promise(function(resolve, reject) {
+			return resolve(context);
+		});
 	},
 
 	error(request) {

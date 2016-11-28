@@ -22,7 +22,8 @@ function getHook( req, res ){
 
 function postHook( req, res ){
   var events = req.body.entry[0].messaging;
-  console.log( "Number of events = " + events );
+  console.log( "Events = " + JSON.stringify(events) );
+  console.log( "# of Events = " + events.length );
   for (i = 0; i < events.length; i++) {
     var event = events[i];
     if (event.message && event.message.text) {
@@ -31,7 +32,8 @@ function postHook( req, res ){
       const {text, attachments} = event.message;
       console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text );
       if (attachments) {
-        sendToMessenger(sender, {text:'Sorry I can only process text messages for now.'})
+        //sendToMessenger(sender, {text:'Sorry I can only process text messages for now.'})
+        fbMessage(sender, 'Sorry I can only process text messages for now.')
         .catch(console.error);
       } else if (text) {
         processWithWit(sender, text);
@@ -73,7 +75,8 @@ function findOrCreateSession(fbid) {
 function processWithWit(sender, message) {
 	if ( message.toUpperCase() === "HELLO" ) {
 		message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"';
-		sendToMessenger( sender, { text:message } );
+		//sendToMessenger( sender, { text:message } );
+    fbMessage( sender, message);
 	} else {
 		var sessionId = findOrCreateSession(sender);
     console.log( "processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
@@ -114,4 +117,24 @@ function sendToMessenger( recipientId, message ) {
             console.log('Error: ', response.body.error);
         }
     });
+};
+
+const fbMessage = (id, text) => {
+  const body = JSON.stringify({
+    recipient: { id },
+    message: { text },
+  });
+  const qs = 'access_token=' + encodeURIComponent(Config.FB_PAGE_ACCESS_TOKEN);
+  return fetch('https://graph.facebook.com/me/messages?' + qs, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body,
+  })
+  .then(rsp => rsp.json())
+  .then(json => {
+    if (json.error && json.error.message) {
+      throw new Error(json.error.message);
+    }
+    return json;
+  });
 };
