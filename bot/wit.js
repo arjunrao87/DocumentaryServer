@@ -37,7 +37,7 @@ const actions = {
 		console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
 		const recipientId = request.context._fbid_;
 		if (recipientId !== null) {
-      return FB.sendToMessenger(recipientId, response.text)
+      return FB.sendToMessenger(JSON.stringify(recipientId), JSON.stringify(response.text))
       .then(() => null)
       .catch((err) => {
         console.error(
