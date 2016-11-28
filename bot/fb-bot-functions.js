@@ -34,8 +34,7 @@ function postHook( req, res ){
             sendToMessenger(sender, 'Sorry I can only process text messages for now.')
             .catch(console.error);
           } else if (text) {
-            processWithWit(sender, text, function (sender, reply) {
-              sendToMessenger(sender, reply) });
+            processWithWit(sender, text);
           } else {
             console.log('Received event', JSON.stringify(event));
           }
@@ -69,7 +68,7 @@ function findOrCreateSession(fbid) {
   return sessionId;
 }
 
-function processWithWit(sender, message, reply) {
+function processWithWit(sender, message) {
 	if (message.toUpperCase() === "HELLO" || message.toUpperCase() === "BRUTE") {
 		message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"';
     console.log( "response = " + message);
