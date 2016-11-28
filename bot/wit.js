@@ -83,6 +83,7 @@ const actions = {
 	},
 
 	['getRecommendations']( request ){
+		console.log( "Hitting getRecommendations");
 		console.log( JSON.stringify( request ) )
 	}
 	// // list of functions Wit.ai can execute
