@@ -22,27 +22,28 @@ function getHook( req, res ){
 
 function postHook( req, res ){
   var events = req.body.entry[0].messaging;
-    for (i = 0; i < events.length; i++) {
-        var event = events[i];
-        if (event.message && event.message.text) {
-          const sender = event.sender.id;
-          const sessionId = findOrCreateSession(sender);
-          const {text, attachments} = event.message;
-          console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text );
-          if (attachments) {
-            sendToMessenger(sender, {text:'Sorry I can only process text messages for now.'})
-            .catch(console.error);
-          } else if (text) {
-            processWithWit(sender, text);
-          } else {
-            console.log('Received event', JSON.stringify(event));
-          }
-        }
-        else if (event.postback) {
-            console.log("Postback received: " + JSON.stringify(event.postback));
-        }
+  console.log( "Number of events = " + events );
+  for (i = 0; i < events.length; i++) {
+    var event = events[i];
+    if (event.message && event.message.text) {
+      const sender = event.sender.id;
+      const sessionId = findOrCreateSession(sender);
+      const {text, attachments} = event.message;
+      console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text );
+      if (attachments) {
+        sendToMessenger(sender, {text:'Sorry I can only process text messages for now.'})
+        .catch(console.error);
+      } else if (text) {
+        processWithWit(sender, text);
+      } else {
+        console.log('Received event', JSON.stringify(event));
+      }
     }
-    res.sendStatus(200);
+    else if (event.postback) {
+        console.log("Postback received: " + JSON.stringify(event.postback));
+    }
+  }
+  res.sendStatus(200);
 }
 
 function findOrCreateSession(fbid) {
@@ -70,18 +71,18 @@ function findOrCreateSession(fbid) {
 }
 
 function processWithWit(sender, message) {
-	if (message.toUpperCase() === "HELLO" || message.toUpperCase() === "BRUTE") {
+	if ( message.toUpperCase() === "HELLO" ) {
 		message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"';
-		sendToMessenger(sender, {text:message});
+		sendToMessenger( sender, { text:message } );
 	} else {
 		var sessionId = findOrCreateSession(sender);
-    console.log("processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
+    console.log( "processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
 		wit.runActions(
 			sessionId, // the user's current session by id
 			message,  // the user's message
 			sessions[sessionId].context)
     .then((context) => {
-  				console.log('Waiting for further messages')
+  				console.log('Waiting for further messages');
   				// Based on the session state, you might want to reset the session
   				// Example:
   				// if (context['done']) {

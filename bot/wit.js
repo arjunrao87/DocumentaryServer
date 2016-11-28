@@ -84,7 +84,7 @@ const actions = {
 
 	['getRecommendations']( {entities, context} ){
 		console.log( "Hitting getRecommendations");
-		console.log( JSON.stringify( request ) );
+		console.log( "Context = " + JSON.stringify( context ) );
 		return new Promise(function(resolve, reject) {
 			return resolve(context);
 		});
