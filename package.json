@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Responds to bot and web messages about documentary requests",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
@@ -12,7 +13,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "node-wit": "^4.1.0",
+    "node-wit":"git+https://1a5c24f7dc72a51e67203c6151442789652fc06f:x-oauth-basic@github.com/arjunrao87/node-wit.git",
     "request": "^2.79.0"
   }
 }

@@ -13,7 +13,6 @@ app.get('/', function (req, res) {
     res.send('Welcome to the homepage of the Documentary Server');
 });
 
-
 //------------------------ START OF MESSENGER BOT APIs -----------------------//
 
 // Facebook Webhook
