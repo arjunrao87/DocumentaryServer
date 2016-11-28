@@ -84,8 +84,10 @@ const actions = {
 
 	['getRecommendations']( {entities, context} ){
 		console.log( "Hitting getRecommendations");
-		console.log( JSON.stringify( request ) )
-		return resolve(context);
+		console.log( JSON.stringify( request ) );
+		return new Promise(function(resolve, reject) {
+			return resolve(context);
+		});
 	}
 	// // list of functions Wit.ai can execute
 	// ['fetch-weather'](sessionId, context, cb) {
