@@ -70,7 +70,7 @@ function findOrCreateSession(fbid) {
 }
 
 function processWithWit(sender, message, reply) {
-	if (message.toUpperCase() === 'HELLO') {
+	if (message.toUpperCase() === "HELLO" || message.toUpperCase() === "BRUTE") {
 		message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"'
 		reply(sender, message)
 	} else {
