@@ -32,14 +32,12 @@ var firstEntityValue = function (entities, entity) {
 const actions = {
 
 	send (request,response) {
-		console.log( "SEND Request = " + JSON.stringify( request ));
-		console.log( "SEND Response = " + JSON.stringify( response ));
-
 		// Our bot has something to say!
 		// Let's retrieve the Facebook user whose session belongs to
 		console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
 		const recipientId = request.context._fbid_;
-		if (recipientId) {
+		console.log( "Recipiecnt id = "+ recipientId);
+		if (true) {
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending

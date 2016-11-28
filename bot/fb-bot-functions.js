@@ -33,7 +33,6 @@ function postHook( req, res ){
       const {text, attachments} = event.message;
       console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text );
       if (attachments) {
-        //sendToMessenger(sender, {text:'Sorry I can only process text messages for now.'})
         fbMessage(sender, 'Sorry I can only process text messages for now.')
         .catch(console.error);
       } else if (text) {
