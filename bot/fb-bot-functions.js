@@ -22,6 +22,9 @@ function getHook( req, res ){
 
 function postHook( req, res ){
   const data = req.body;
+  sessions = null;
+  console.log( "Nulling out things ");
+  return;
   if (data.object === 'page') {
     data.entry.forEach(entry => {
       entry.messaging.forEach(event => {
