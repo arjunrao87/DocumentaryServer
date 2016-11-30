@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var FB = require('./bot/fb-bot-functions');
-
+var newrelic = require( 'newrelic');
 var app = express();
 
 app.use(bodyParser.urlencoded({extended: false}));
