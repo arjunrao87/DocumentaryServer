@@ -13,7 +13,7 @@ const actions = {
     return new Promise(function(resolve, reject) {
       console.log( "Sessionasd = " + JSON.stringify( FB.sessions ) );
       const recipientId = sessions[sessionId].fbid;
-      sendToMessenger(recipientId, text)
+      FB.sendToMessenger(recipientId, text)
       return resolve();
     });
   },
