@@ -1,6 +1,7 @@
 var request = require('request');
 var Config = require('../config');
-var Wit = require('./wit').getWit();
+const {Wit, log} = require('node-wit');
+var client = getWit();
 // const wit = getWit();
 // var sessions = {};
 
@@ -71,7 +72,7 @@ function processWithWit(sender, message) {
 	} else {
 		var sessionId = findOrCreateSession(sender);
     console.log( "processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
-		Wit.runActions(
+		client.runActions(
 			sessionId,
 			message,
 			sessions[sessionId].context)
@@ -103,3 +104,37 @@ function sendToMessenger( id, text ) {
     return json;
   });
 };
+
+
+const actions = {
+
+  send({sessionId}, {text}){
+    return new Promise(function(resolve, reject) {
+      console.log( "Sessionasd = " + JSON.stringify( FB.sessions ) );
+      const recipientId = sessions[sessionId].fbid;
+      sendToMessenger(recipientId, text)
+      return resolve();
+    });
+  },
+
+  merge({entities, context, message, sessionId,cb})  {
+    return new Promise(function(resolve, reject) {
+      return resolve(context);
+    });
+  },
+
+  error(request) {
+    console.log(JSON.stringify( request ))
+  },
+
+  getRecommendations({sessionId, context, text, entities}) {
+        return Promise.resolve(context);
+  }
+}
+
+function getWit() {
+  return new Wit({
+  accessToken: Config.WIT_TOKEN,
+  actions:actions
+  });
+}
