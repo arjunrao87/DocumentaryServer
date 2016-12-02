@@ -3,6 +3,7 @@
 var Config = require('../config')
 var Wit = require('node-wit').Wit
 var request = require('request')
+var FB = require( './fb-bot-functions' );
 
 module.exports = {
 	getWit
@@ -23,7 +24,7 @@ const actions = {
 		// Let's retrieve the Facebook user whose session belongs to
 		console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
 		//const recipientId = request.context._fbid_;
-		const recipientId = sessions[sessionId].fbid;
+		const recipientId = FB.sessions[sessionId].fbid;
 		console.log( "recipientId = " + recipientId);
 		if (recipientId) {
       return sendToMessenger(recipientId, response.text)
