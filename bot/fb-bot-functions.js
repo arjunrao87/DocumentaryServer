@@ -127,7 +127,7 @@ const actions = {
     //const recipientId = request.context._fbid_;
     console.log( "The id maybe " + sessionId);
     console.log( "Sessions object - " + JSON.stringify( sessions ) );
-    const recipientId = FB.sessions[sessionId].fbid;
+    const recipientId = sessions[sessionId].fbid;
     console.log( "recipientId = " + recipientId);
     if (recipientId) {
       return sendToMessenger(recipientId, text)
