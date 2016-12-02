@@ -34,7 +34,7 @@ function postHook( req, res ){
         sendToMessenger(sender, 'Sorry I can only process text messages for now.')
         .catch(console.error);
       } else if (text) {
-        processWithWit(sender, text);
+        processMessages(sender, text);
       } else {
         console.log('Received event', JSON.stringify(event));
       }
@@ -60,24 +60,36 @@ function findOrCreateSession(fbid) {
   return sessionId;
 }
 
-function processWithWit(sender, message) {
-	if ( message.toUpperCase() === "HELLO" ) {
-		message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"';
-    sendToMessenger( sender, message);
+function processMessages(sender, message) {
+	if ( isWelcomeGreeting(  message ) ) {
+		processWelcomeGreeting( sender, message );
 	} else {
-		var sessionId = findOrCreateSession(sender);
-    console.log( "processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
-		client.runActions(
-			sessionId,
-			message,
-			sessions[sessionId].context)
-    .then((context) => {
-  				console.log('Waiting for further messages');
-  			})
-    .catch((err) => {
-        console.error('Oops! Got an error from Wit: ', err.stack || err);
-    })
+    processOtherMessages( sender, message );
   }
+}
+
+function isWelcomeGreeting( message ){
+  return message.toUpperCase() === "HELLO";
+}
+
+function processWelcomeGreeting( sender, message ){
+  message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"';
+  sendToMessenger( sender, message);
+}
+
+function processOtherMessages( sender, message ){
+  var sessionId = findOrCreateSession(sender);
+  console.log( "processOtherMessages :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
+  client.runActions(
+    sessionId,
+    message,
+    sessions[sessionId].context)
+  .then((context) => {
+        console.log('Waiting for further messages');
+      })
+  .catch((err) => {
+      console.error('Oops! Got an error from Wit: ', err.stack || err);
+  });
 }
 
 function sendToMessenger( id, text ) {
