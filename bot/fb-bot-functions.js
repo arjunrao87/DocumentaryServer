@@ -1,9 +1,7 @@
 var request = require('request');
 var Config = require('../config');
 const {Wit, log} = require('node-wit');
-var client = getWit();
-// const wit = getWit();
-// var sessions = {};
+var sessions = {};
 
 module.exports={
   getHook,
@@ -13,9 +11,6 @@ module.exports={
   processWithWit
 };
 
-global.sessions = {};
-
-// FB Webhook event handler
 function getHook( req, res ){
   if (req.query['hub.verify_token'] === Config.FB_VERIFY_TOKEN) {
       res.send(req.query['hub.challenge']);
@@ -131,6 +126,8 @@ const actions = {
         return Promise.resolve(context);
   }
 }
+
+var client = getWit();
 
 function getWit() {
   return new Wit({
