@@ -3,7 +3,6 @@ var Config = require('../config');
 var Wit = require('node-wit').Wit;
 var sessions = {};
 
-const wit = getWit();
 
 module.exports={
   getHook,
@@ -246,6 +245,7 @@ var firstEntityValue = function (entities, entity) {
   }
   return typeof val === 'object' ? val.value : val
 }
+const wit = getWit();
 
 // SETUP THE WIT.AI SERVICE
 function getWit() {
