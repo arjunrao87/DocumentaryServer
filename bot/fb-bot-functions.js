@@ -172,6 +172,7 @@ const actions = {
     //  delete context.ack
     // }
     // cb(context);
+    console.log( "In the MERGE method ");
     return new Promise(function(resolve, reject) {
       return resolve(context);
     });
