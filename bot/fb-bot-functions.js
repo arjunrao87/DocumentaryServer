@@ -18,29 +18,30 @@ function getHook( req, res ){
 
 function postHook( req, res ){
   var events = req.body.entry[0].messaging;
-  console.log( "Events = " + JSON.stringify(events) );
-  console.log( "# of Events = " + events.length );
   for (i = 0; i < events.length; i++) {
-    var event = events[i];
-    if (event.message && event.message.text) {
-      const sender = event.sender.id;
-      const sessionId = findOrCreateSession(sender);
-      const {text, attachments} = event.message;
-      console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text );
-      if (attachments) {
-        sendToMessenger(sender, 'Sorry I can only process text messages for now.')
-        .catch(console.error);
-      } else if (text) {
-        processMessages(sender, text);
-      } else {
-        console.log('Received event', JSON.stringify(event));
-      }
-    }
-    else if (event.postback) {
-        console.log("Postback received: " + JSON.stringify(event.postback));
-    }
+    processEachEvent( events[i] );
   }
   res.sendStatus(200);
+}
+
+function processEachEvent(event){
+  if (event.message && event.message.text) {
+    const sender = event.sender.id;
+    const sessionId = findOrCreateSession(sender);
+    const {text, attachments} = event.message;
+    console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text );
+    if (attachments) {
+      sendToMessenger(sender, 'Sorry I can only process text messages for now.')
+      .catch(console.error);
+    } else if (text) {
+      processMessages(sender, text);
+    } else {
+      console.log('Received event', JSON.stringify(event));
+    }
+  }
+  else if (event.postback) {
+      console.log("Postback received: " + JSON.stringify(event.postback));
+  }
 }
 
 function findOrCreateSession(fbid) {
