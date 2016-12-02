@@ -1,7 +1,7 @@
 var request = require('request');
 var Config = require('../config');
-var wit = require('./wit').getWit;
-//const wit = getWit();
+var Wit = require('./wit').getWit();
+// const wit = getWit();
 var sessions = {};
 
 module.exports={
@@ -70,7 +70,7 @@ function processWithWit(sender, message) {
 	} else {
 		var sessionId = findOrCreateSession(sender);
     console.log( "processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
-		wit.runActions(
+		Wit.runActions(
 			sessionId,
 			message,
 			sessions[sessionId].context)
