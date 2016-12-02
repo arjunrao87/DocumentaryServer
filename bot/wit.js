@@ -19,7 +19,8 @@ function getWit() {
 
 const actions = {
 
-	send (request,response) {
+	// send (request,response) {
+	send({sessionId}, {text}){
 		// Our bot has something to say!
 		// Let's retrieve the Facebook user whose session belongs to
 		console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
