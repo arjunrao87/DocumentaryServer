@@ -1,13 +1,43 @@
-// 'use strict'
-
-// var Config = require('../config')
-// var Wit = require('node-wit').Wit
-// var request = require('request')
+var Config = require('../config')
+const {Wit, log} = require('node-wit');
+var request = require('request')
 // var FB = require( './fb-bot-functions' );
 
-// module.exports = {
-// 	getWit
-// }
+module.exports = {
+	getWit
+}
+
+const actions = {
+
+  send({sessionId}, {text}){
+    return new Promise(function(resolve, reject) {
+      const recipientId = sessions[sessionId].fbid;
+      sendToMessenger(recipientId, text)
+      return resolve();
+    });
+  },
+
+  merge({entities, context, message, sessionId,cb})  {
+    return new Promise(function(resolve, reject) {
+      return resolve(context);
+    });
+  },
+
+  error(request) {
+    console.log(JSON.stringify( request ))
+  },
+
+  getRecommendations({sessionId, context, text, entities}) {
+        return Promise.resolve(context);
+  }
+}
+
+function getWit() {
+  return new Wit({
+  accessToken: Config.WIT_TOKEN,
+  actions:actions
+  });
+}
 
 // // SETUP THE WIT.AI SERVICE
 // function getWit() {
