@@ -11,6 +11,7 @@ const actions = {
 
   send({sessionId}, {text}){
     return new Promise(function(resolve, reject) {
+      console.log( "Sessionasd = " + JSON.stringify( FB.sessions ) );
       const recipientId = FB.sessions[sessionId].fbid;
       sendToMessenger(recipientId, text)
       return resolve();
