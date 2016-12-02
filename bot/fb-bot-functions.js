@@ -37,7 +37,7 @@ function postHook( req, res ){
         sendToMessenger(sender, 'Sorry I can only process text messages for now.')
         .catch(console.error);
       } else if (text) {
-        processWithWit(sender, text);
+        processWithWit(event.recipient.id, text);
       } else {
         console.log('Received event', JSON.stringify(event));
       }
