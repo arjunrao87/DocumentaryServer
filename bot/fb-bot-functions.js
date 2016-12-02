@@ -7,8 +7,7 @@ module.exports={
   getHook,
   postHook,
   sendToMessenger,
-  findOrCreateSession,
-  processWithWit
+  findOrCreateSession
 };
 
 function getHook( req, res ){
