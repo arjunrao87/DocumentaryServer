@@ -127,26 +127,31 @@ const actions = {
     // Let's retrieve the Facebook user whose session belongs to
     // console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
     //const recipientId = request.context._fbid_;
-    console.log( "The id maybe " + sessionId);
-    console.log( "Sessions object - " + JSON.stringify( sessions ) );
-    const recipientId = sessions[sessionId].fbid;
-    console.log( "recipientId = " + recipientId);
-    if (recipientId) {
-      return sendToMessenger(recipientId, text)
-      .then(() => null)
-      .catch((err) => {
-        console.error(
-          'Oops! An error occurred while forwarding the response to',
-          recipientId,
-          ':',
-          err.stack || err
-        );
-      });
-    }
-    else {
-      console.error('Oops! Couldn\'t find user for session:', sessionId);
-      return Promise.resolve()
-    }
+    // console.log( "The id maybe " + sessionId);
+    // console.log( "Sessions object - " + JSON.stringify( sessions ) );
+    // const recipientId = sessions[sessionId].fbid;
+    // console.log( "recipientId = " + recipientId);
+    // if (recipientId) {
+    //   return sendToMessenger(recipientId, text)
+    //   .then(() => null)
+    //   .catch((err) => {
+    //     console.error(
+    //       'Oops! An error occurred while forwarding the response to',
+    //       recipientId,
+    //       ':',
+    //       err.stack || err
+    //     );
+    //   });
+    // }
+    // else {
+    //   console.error('Oops! Couldn\'t find user for session:', sessionId);
+    //   return Promise.resolve()
+    // }
+
+    return new Promise(function(resolve, reject) {
+            console.log(JSON.stringify(response));
+            return resolve();
+    });
   },
 
   merge({entities, context, message, sessionId,cb})  {
@@ -190,13 +195,6 @@ const actions = {
         return Promise.resolve(context);
   }
 
-  // ['getRecommendations']( {entities, context} ){
-  //   console.log( "Hitting getRecommendations");
-  //   console.log( "Context = " + JSON.stringify( context ) );
-  //   return new Promise(function(resolve, reject) {
-  //     return resolve(context);
-  //   });
-  // }
   // // list of functions Wit.ai can execute
   // ['fetch-weather'](sessionId, context, cb) {
   //  // Here we can place an API call to a weather service
