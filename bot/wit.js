@@ -1,7 +1,7 @@
 var Config = require('../config')
 const {Wit, log} = require('node-wit');
-var request = require('request')
-// var FB = require( './fb-bot-functions' );
+var request = require('request');
+var FB = require( './fb-bot-functions' );
 
 module.exports = {
 	getWit
@@ -11,7 +11,7 @@ const actions = {
 
   send({sessionId}, {text}){
     return new Promise(function(resolve, reject) {
-      const recipientId = sessions[sessionId].fbid;
+      const recipientId = FB.sessions[sessionId].fbid;
       sendToMessenger(recipientId, text)
       return resolve();
     });
