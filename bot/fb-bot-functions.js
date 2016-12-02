@@ -31,8 +31,7 @@ function processEachEvent(event){
     const {text, attachments} = event.message;
     console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text );
     if (attachments) {
-      sendToMessenger(sender, 'Sorry I can only process text messages for now.')
-      .catch(console.error);
+      sendToMessenger(sender, 'Sorry I can only process text messages for now.').catch(console.error);
     } else if (text) {
       processMessages(sender, text);
     } else {
