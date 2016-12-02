@@ -86,7 +86,8 @@ function processWithWit(sender, message) {
   				// 	delete sessions[sessionId]
   				// }
   				// Updating the user's current session state
-  				sessions[sessionId].context = context
+  				// sessions[sessionId].context = context
+          console.log( "In the RunActions Then, context = " + JSON.stringify( context));
   			})
     .catch((err) => {
         console.error('Oops! Got an error from Wit: ', err.stack || err);
