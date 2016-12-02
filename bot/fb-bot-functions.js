@@ -173,6 +173,7 @@ const actions = {
     // }
     // cb(context);
     console.log( "In the MERGE method ");
+
     return new Promise(function(resolve, reject) {
       return resolve(context);
     });
@@ -182,13 +183,12 @@ const actions = {
     console.log(JSON.stringify( request ))
   },
 
-  ['getRecommendations'](sessionId, context, cb){
+  ['getRecommendations']( {entities, context} ){
     console.log( "Hitting getRecommendations");
     console.log( "Context = " + JSON.stringify( context ) );
-    cb( context );
-    // return new Promise(function(resolve, reject) {
-    //   return resolve(context);
-    // });
+    return new Promise(function(resolve, reject) {
+      return resolve(context);
+    });
   }
   // // list of functions Wit.ai can execute
   // ['fetch-weather'](sessionId, context, cb) {
