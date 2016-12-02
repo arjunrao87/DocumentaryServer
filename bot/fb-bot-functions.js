@@ -2,7 +2,6 @@ var request = require('request');
 var Config = require('../config');
 const {Wit, log} = require('node-wit');
 var sessions = {};
-const wit = getWit();
 
 module.exports={
   getHook,
@@ -103,6 +102,7 @@ function sendToMessenger( id, text ) {
   });
 };
 
+
 const actions = {
 
   send({sessionId}, {text}){
@@ -127,6 +127,8 @@ const actions = {
         return Promise.resolve(context);
   }
 }
+
+const wit = getWit();
 
 function getWit() {
   return new Wit({
