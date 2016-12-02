@@ -3,6 +3,8 @@ var Config = require('../config');
 var Wit = require('node-wit').Wit;
 var sessions = {};
 
+const wit = getWit();
+
 module.exports={
   getHook,
   postHook,
@@ -72,7 +74,7 @@ function processWithWit(sender, message) {
 	} else {
 		var sessionId = findOrCreateSession(sender);
     console.log( "processWithWit :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
-		Wit.runActions(
+		wit.runActions(
 			sessionId, // the user's current session by id
 			message,  // the user's message
 			sessions[sessionId].context)
