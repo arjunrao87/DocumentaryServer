@@ -23,12 +23,12 @@ const actions = {
 	send({sessionId}, {text}){
 		// Our bot has something to say!
 		// Let's retrieve the Facebook user whose session belongs to
-		console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
+		// console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
 		//const recipientId = request.context._fbid_;
 		const recipientId = FB.sessions[sessionId].fbid;
 		console.log( "recipientId = " + recipientId);
 		if (recipientId) {
-      return sendToMessenger(recipientId, response.text)
+      return sendToMessenger(recipientId, text)
       .then(() => null)
       .catch((err) => {
         console.error(
