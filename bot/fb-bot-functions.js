@@ -96,7 +96,7 @@ function processWithWit(sender, message) {
 // generic function sending messages
 function sendToMessenger( id, text ) {
   const body = JSON.stringify({
-    recipient: "1480521671962588",
+    recipient: { id },
     message: { text },
   });
   const qs = 'access_token=' + encodeURIComponent(Config.FB_PAGE_ACCESS_TOKEN);
@@ -184,9 +184,9 @@ const actions = {
   ['getRecommendations']( {entities, context} ){
     console.log( "Hitting getRecommendations");
     console.log( "Context = " + JSON.stringify( context ) );
-    return new Promise(function(resolve, reject) {
-      return resolve(context);
-    });
+    // return new Promise(function(resolve, reject) {
+    //   return resolve(context);
+    // });
   }
   // // list of functions Wit.ai can execute
   // ['fetch-weather'](sessionId, context, cb) {
