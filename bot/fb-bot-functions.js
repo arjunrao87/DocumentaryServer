@@ -1,6 +1,7 @@
 var request = require('request');
 var Config = require('../config');
-var Wit = require('node-wit').Wit;
+//var Wit = require('node-wit').Wit;
+const {Wit, log} = require('node-wit');
 var sessions = {};
 
 
@@ -182,14 +183,20 @@ const actions = {
   error(request) {
     console.log(JSON.stringify( request ))
   },
-
-  ['getRecommendations']( {entities, context} ){
-    console.log( "Hitting getRecommendations");
-    console.log( "Context = " + JSON.stringify( context ) );
-    return new Promise(function(resolve, reject) {
-      return resolve(context);
-    });
+  getRecommendations({sessionId, context, text, entities}) {
+        console.log(`Session ${sessionId} received ${text}`);
+        console.log(`The current context is ${JSON.stringify(context)}`);
+        console.log(`Wit extracted ${JSON.stringify(entities)}`);
+        return Promise.resolve(context);
   }
+
+  // ['getRecommendations']( {entities, context} ){
+  //   console.log( "Hitting getRecommendations");
+  //   console.log( "Context = " + JSON.stringify( context ) );
+  //   return new Promise(function(resolve, reject) {
+  //     return resolve(context);
+  //   });
+  // }
   // // list of functions Wit.ai can execute
   // ['fetch-weather'](sessionId, context, cb) {
   //  // Here we can place an API call to a weather service
