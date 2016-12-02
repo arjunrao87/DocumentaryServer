@@ -9,6 +9,7 @@ module.exports={
   sendToMessenger,
   findOrCreateSession,
   processWithWit,
+  sessions:sessions
 };
 
 // FB Webhook event handler
@@ -48,25 +49,18 @@ function postHook( req, res ){
 }
 
 function findOrCreateSession(fbid) {
-  var sessionId;
-
-  // DOES USER SESSION ALREADY EXIST?
+let sessionId;
+  // Let's see if we already have a session for the user fbid
   Object.keys(sessions).forEach(k => {
     if (sessions[k].fbid === fbid) {
-      // YUP
+      // Yep, got it!
       sessionId = k;
     }
-  })
-
-  // No session so we will create one
+  });
   if (!sessionId) {
-    sessionId = new Date().toISOString()
-    sessions[sessionId] = {
-      fbid: fbid,
-      context: {
-        _fbid_: fbid
-      }
-    }
+    // No session found for user fbid, let's create a new one
+    sessionId = new Date().toISOString();
+    sessions[sessionId] = {fbid: fbid, context: {}};
   }
   return sessionId;
 }

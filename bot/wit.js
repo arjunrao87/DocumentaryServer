@@ -16,26 +16,16 @@ function getWit() {
 	});
 }
 
-var firstEntityValue = function (entities, entity) {
-	var val = entities && entities[entity] &&
-		Array.isArray(entities[entity]) &&
-		entities[entity].length > 0 &&
-		entities[entity][0].value
-
-	if (!val) {
-		return null
-	}
-	return typeof val === 'object' ? val.value : val
-}
-
 const actions = {
 
 	send (request,response) {
 		// Our bot has something to say!
 		// Let's retrieve the Facebook user whose session belongs to
 		console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
-		const recipientId = request.context._fbid_;
-		if (recipientId !== null) {
+		//const recipientId = request.context._fbid_;
+		const recipientId = sessions[sessionId].fbid;
+		console.log( "recipientId = " + recipientId);
+		if (recipientId) {
       return sendToMessenger(recipientId, response.text)
       .then(() => null)
       .catch((err) => {
@@ -112,12 +102,12 @@ const actions = {
 	// },
 }
 
-// BOT TESTING MODE
-if (require.main === module) {
-	console.log('Bot testing mode!')
-	var client = getWit();
-	client.interactive();
-}
+// // BOT TESTING MODE
+// if (require.main === module) {
+// 	console.log('Bot testing mode!')
+// 	var client = getWit();
+// 	client.interactive();
+// }
 
 // GET WEATHER FROM API
 // var getWeather = function (location) {
@@ -137,6 +127,18 @@ if (require.main === module) {
 // CHECK IF URL IS AN IMAGE FILE
 var checkURLIsImage = function (url) {
     return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+}
+
+var firstEntityValue = function (entities, entity) {
+	var val = entities && entities[entity] &&
+		Array.isArray(entities[entity]) &&
+		entities[entity].length > 0 &&
+		entities[entity][0].value
+
+	if (!val) {
+		return null
+	}
+	return typeof val === 'object' ? val.value : val
 }
 
 function sendToMessenger( id, text ) {
