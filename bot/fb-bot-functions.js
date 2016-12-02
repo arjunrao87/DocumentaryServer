@@ -181,9 +181,10 @@ const actions = {
     console.log(JSON.stringify( request ))
   },
 
-  ['getRecommendations']( {entities, context} ){
+  ['getRecommendations'](sessionId, context, cb){
     console.log( "Hitting getRecommendations");
     console.log( "Context = " + JSON.stringify( context ) );
+    cb( context );
     // return new Promise(function(resolve, reject) {
     //   return resolve(context);
     // });
