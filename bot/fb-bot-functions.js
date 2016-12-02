@@ -5,9 +5,7 @@ var sessions = {};
 
 module.exports={
   getHook,
-  postHook,
-  sendToMessenger,
-  findOrCreateSession
+  postHook
 };
 
 function getHook( req, res ){
