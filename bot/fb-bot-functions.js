@@ -148,6 +148,9 @@ const actions = {
 
     return new Promise(function(resolve, reject) {
             console.log(JSON.stringify(text));
+            const recipientId = sessions[sessionId].fbid;
+            console.log( "recipientId = " + recipientId);
+            sendToMessenger(recipientId, text)
             return resolve();
     });
   },
