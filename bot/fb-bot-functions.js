@@ -51,16 +51,13 @@ function postHook( req, res ){
 }
 
 function findOrCreateSession(fbid) {
-let sessionId;
-  // Let's see if we already have a session for the user fbid
+  let sessionId;
   Object.keys(sessions).forEach(k => {
     if (sessions[k].fbid === fbid) {
-      // Yep, got it!
       sessionId = k;
     }
   });
   if (!sessionId) {
-    // No session found for user fbid, let's create a new one
     sessionId = new Date().toISOString();
     sessions[sessionId] = {fbid: fbid, context: {}};
   }
@@ -150,7 +147,7 @@ const actions = {
     // }
 
     return new Promise(function(resolve, reject) {
-            console.log(JSON.stringify(response));
+            console.log(JSON.stringify(text));
             return resolve();
     });
   },
