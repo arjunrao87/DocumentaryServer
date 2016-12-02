@@ -25,6 +25,8 @@ const actions = {
 		// Let's retrieve the Facebook user whose session belongs to
 		// console.log( "RESPONSE TEXT object = " + JSON.stringify( response.text ) );
 		//const recipientId = request.context._fbid_;
+		console.log( "The id maybe " + sessionId);
+		console.log( "Sessions object - " + JSON.stringify( sessions ) );
 		const recipientId = FB.sessions[sessionId].fbid;
 		console.log( "recipientId = " + recipientId);
 		if (recipientId) {
