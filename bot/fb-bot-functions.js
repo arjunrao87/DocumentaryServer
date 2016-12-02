@@ -37,7 +37,7 @@ function postHook( req, res ){
         sendToMessenger(sender, 'Sorry I can only process text messages for now.')
         .catch(console.error);
       } else if (text) {
-        processWithWit(event.recipient.id, text);
+        processWithWit(sender, text);
       } else {
         console.log('Received event', JSON.stringify(event));
       }
@@ -96,7 +96,7 @@ function processWithWit(sender, message) {
 // generic function sending messages
 function sendToMessenger( id, text ) {
   const body = JSON.stringify({
-    recipient: { id },
+    recipient: { "1480521671962588" },
     message: { text },
   });
   const qs = 'access_token=' + encodeURIComponent(Config.FB_PAGE_ACCESS_TOKEN);
