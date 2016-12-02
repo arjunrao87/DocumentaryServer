@@ -29,9 +29,7 @@ function processEachEvent(event){
     const sender = event.sender.id;
     const sessionId = findOrCreateSession(sender);
     const {text, attachments} = event.message;
-    if (attachments) {
-      sendToMessenger(sender, 'Sorry I can only process text messages for now.').catch(console.error);
-    } else if (text) {
+    if (text) {
       processMessages(sender, text);
     } else {
       console.log('Received event', JSON.stringify(event));
@@ -76,16 +74,13 @@ function processWelcomeGreeting( sender ){
 function processOtherMessages( sender, message ){
   var sessionId = findOrCreateSession(sender);
   console.log( "processOtherMessages :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
-  client.runActions(
-    sessionId,
-    message,
-    sessions[sessionId].context)
-  .then((context) => {
-        console.log('Waiting for further messages');
-      })
-  .catch((err) => {
-      console.error('Oops! Got an error from Wit: ', err.stack || err);
-  });
+  client.runActions( sessionId, message, sessions[sessionId].context)
+        .then((context) => {
+          console.log('Waiting for further messages');
+        })
+        .catch((err) => {
+          console.error('Oops! Got an error from Wit: ', err.stack || err);
+        });
 }
 
 function sendToMessenger( id, text ) {
