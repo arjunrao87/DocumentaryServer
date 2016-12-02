@@ -1,7 +1,7 @@
 var Config = require('../config')
 const {Wit, log} = require('node-wit');
 var request = require('request');
-var FB = require('./bot/fb-bot-functions');
+var FB = require('./fb-bot-functions');
 
 module.exports = {
 	getWit
