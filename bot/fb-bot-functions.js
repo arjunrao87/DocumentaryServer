@@ -29,7 +29,6 @@ function processEachEvent(event){
     const sender = event.sender.id;
     const sessionId = findOrCreateSession(sender);
     const {text, attachments} = event.message;
-    console.log("Sender = " + sender + ", sessionId = " + sessionId + ", text = " + text );
     if (attachments) {
       sendToMessenger(sender, 'Sorry I can only process text messages for now.').catch(console.error);
     } else if (text) {
@@ -59,7 +58,7 @@ function findOrCreateSession(fbid) {
 
 function processMessages(sender, message) {
 	if ( isWelcomeGreeting(  message ) ) {
-		processWelcomeGreeting( sender, message );
+		processWelcomeGreeting( sender );
 	} else {
     processOtherMessages( sender, message );
   }
@@ -69,8 +68,8 @@ function isWelcomeGreeting( message ){
   return message.toUpperCase() === "HELLO";
 }
 
-function processWelcomeGreeting( sender, message ){
-  message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"';
+function processWelcomeGreeting( sender ){
+  var message = 'Hello yourself! I am Docu. You can say "I want to watch a documentary"';
   sendToMessenger( sender, message);
 }
 
