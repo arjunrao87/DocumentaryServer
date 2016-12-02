@@ -96,7 +96,7 @@ function processWithWit(sender, message) {
 // generic function sending messages
 function sendToMessenger( id, text ) {
   const body = JSON.stringify({
-    recipient: { "1480521671962588" },
+    recipient: "1480521671962588",
     message: { text },
   });
   const qs = 'access_token=' + encodeURIComponent(Config.FB_PAGE_ACCESS_TOKEN);
