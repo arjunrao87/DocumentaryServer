@@ -2,16 +2,17 @@ var request = require('request');
 var Config = require('../config');
 var Wit = require('./wit').getWit();
 // const wit = getWit();
-var sessions = {};
+// var sessions = {};
 
 module.exports={
   getHook,
   postHook,
   sendToMessenger,
   findOrCreateSession,
-  processWithWit,
-  sessions:sessions
+  processWithWit
 };
+
+global.sessions = {};
 
 // FB Webhook event handler
 function getHook( req, res ){
