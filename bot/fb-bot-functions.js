@@ -73,7 +73,6 @@ function processWelcomeGreeting( sender ){
 
 function processOtherMessages( sender, message ){
   var sessionId = findOrCreateSession(sender);
-  console.log( "processOtherMessages :: Sender = " + sender + ", sessionId = " + sessionId + ", text = " + message + ", context = " + JSON.stringify(sessions[sessionId].context) );
   client.runActions( sessionId, message, sessions[sessionId].context)
         .then((context) => {
           console.log('Waiting for further messages');
