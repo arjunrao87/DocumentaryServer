@@ -37,48 +37,15 @@ Can I get some recommendations for documentaries?
 
 # Welcome Greetings
 
-Hi there!
+(Hi/Hello/Hola/Greetings) (Bot/there/Docu/DocuBot)!
 
-Hello Bot!
-
-Hello Docu!
-
-Greetings DocuBot!
 
 # Goodbye Greetings
 
-Bye!
-
-Cya!
-
-Goodbye!
-
-Cya later!
-
-Seeya later!
-
-Seeya!
-
-Byeeeeeeee!
-
-Au Revoir!
-
-Hasta la vista baby!
+(Bye/Cya/Goodbye/Cya later/Seeya later/Seeya/Byeeeeeeee/Au Revoir/Hasta la vista baby)!
 
 # Thankfulness
 
-Thanks!
-
-Thank you!
-
-Danke!
-
-Thanks much!
-
-Merci!
-
-Gracias!
-
-Merci beaucoup!
+(Thanks/Thank you/Danke/Thanks much/Merci/Gracias/Merci beaucoup)!
 
 # Genre preference settings
