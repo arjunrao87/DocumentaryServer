@@ -1,1 +1,20 @@
-//Insert schema here
+type Movie{
+  id : ID!
+  voteCount : Int
+  video : Boolean
+  voteAverage : Float
+  title : String
+  popularity : Float
+  posterPath : String
+  originalLanguage : String
+  originalTitle : String
+  genreIds : [Int!]
+  backdropPath : String
+  adult : Boolean
+  overview : String
+  releaseDate : String
+}
+
+type Query{
+  search(query:String!) : [Movie!]!
+}
