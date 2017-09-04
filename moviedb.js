@@ -1,4 +1,5 @@
 require("babel-polyfill");
+require("babel-core/register");
 
 var rp = require('request-promise');
 
@@ -17,7 +18,6 @@ function searchForString( searchQuery ){
   return rp( options );
 }
 
-
 async function searchQuery( query ){
   console.log( "Search query - " + query )
   const promise = searchForString( query );
@@ -25,7 +25,7 @@ async function searchQuery( query ){
     let results = await Promise.resolve( promise );
     console.log( "JSON = " + JSOn.stringify( results ));
   } catch ( error ){
-
+    console.log( "Error = " + error )
   }
 }
 

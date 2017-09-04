@@ -2,5 +2,4 @@
 node_modules/
 *.txt
 npm-debug.log
-config.js
-examples.js
+dist/
