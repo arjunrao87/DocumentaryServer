@@ -6,15 +6,17 @@ var MOVIE_DB = require('./moviedb');
 var app = express();
 
 var root = {
-  search: ({query}) => {
-    return MOVIE_DB.searchQuery( query );
+  search: (obj, args, context, info) => {
+    console.log( "In Search mode " + JSON.stringify(obj));
+    //return MOVIE_DB.searchQuery( query );
   },
 
-  Movie:({query}) => {
-    console.log( "query")
-    return {
-      "id" : "MockID"
-    }
+  MovieConnection:(obj, args, context, info) => {
+    console.log( "In movies mode" + JSON.stringify(obj))
+  },
+
+  Movie:(obj, args, context, info) => {
+    console.log( "In Movie mode" + JSON.stringify(obj))
   }
 };
 
@@ -37,8 +39,31 @@ var schema = buildSchema(
     releaseDate : String
   }
 
+  type MovieConnection{
+    edges: [MovieEdge],
+    pageInfo: PageInfo
+  }
+
+  type MovieEdge {
+    node: Movie!,
+    cursor: ID!
+  }
+
+  type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+  }
+
+  input SearchQuery{
+    query:String!,
+    first: Int,
+    last: Int,
+    after: ID,
+    before: ID
+  }
+
   type Query{
-    search(query:String!) : [Movie!]!
+    search( input:SearchQuery! ) : MovieConnection
   }
 `
 );
