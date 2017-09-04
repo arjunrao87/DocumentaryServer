@@ -23,7 +23,7 @@ async function searchQuery( query ){
   const promise = searchForString( query );
   try{
     let results = await Promise.resolve( promise );
-    console.log( "JSON = " + JSOn.stringify( results ));
+    console.log( "JSON = " + JSON.stringify( results ));
   } catch ( error ){
     console.log( "Error = " + error )
   }
