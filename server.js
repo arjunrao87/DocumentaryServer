@@ -1,18 +1,37 @@
-
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
 var { buildSchema } = require('graphql');
 var MOVIE_DB = require('./moviedb');
 var app = express();
+import { makeExecutableSchema } from 'graphql-tools';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import bodyParser from 'body-parser';
+import cors from 'cors'
 
-var root = {
-  search: (obj, args, context, info) => {
-    console.log( "In Search mode " + JSON.stringify(obj));
-    //return MOVIE_DB.searchQuery( query );
+const resolvers = {
+  Query :{
+    search: (_, { input }) => {
+      console.log( "Input = " + JSON.stringify( input ) );
+      return {}
+    }
   },
 
-  MovieConnection:(obj, args, context, info) => {
-    console.log( "In movies mode" + JSON.stringify(obj))
+  MovieConnection:(_) => {
+    console.log( "In movies connection" + JSON.stringify(_))
+    return {
+      "edges" : [],
+      "pageInfo" : undefined
+    }
+  },
+
+  MovieEdge : (obj, args, context, info) => {
+    console.log( "In movies edge" + JSON.stringify(obj))
+    return {
+      "node" : {
+        "id" : "Insert value"
+      },
+      "cursor" : "Undefined cursor"
+    }
   },
 
   Movie:(obj, args, context, info) => {
@@ -20,7 +39,7 @@ var root = {
   }
 };
 
-var schema = buildSchema(
+const typeDefs =
 `
   type Movie{
     id : ID!
@@ -66,19 +85,20 @@ var schema = buildSchema(
     search( input:SearchQuery! ) : MovieConnection
   }
 `
-);
+;
 
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-}));
-
-app.get('/', function (req, res) {
-  console.log( "Hit the home page ");
-  MOVIE_DB.searchForString( "Jack Reacher" );
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
 });
 
-app.listen(4000);
+const GRAPHQL_PORT = 3000;
 
-console.log('Running Movie Server at localhost:4000/graphql');
+const graphQLServer = express().use('*',cors());
+
+graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({ schema:schema, context:{} }));
+graphQLServer.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+
+graphQLServer.listen(GRAPHQL_PORT, () => console.log(
+  `GraphiQL is now running on http://localhost:${GRAPHQL_PORT}/graphiql`
+));
