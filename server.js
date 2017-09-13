@@ -9,29 +9,33 @@ import bodyParser from 'body-parser';
 import cors from 'cors'
 
 const resolvers = {
-  Query :{
-    search: (_, { query }) => {
-      console.log( "Input = " + query );
-      return {}
+  Query : {
+    search: (root, args) => {
+      console.log( "search = " + JSON.stringify( args ) );
+      return {"MovieConnection" : args }
     }
   },
 
-  MovieConnection:(_) => {
-    console.log( "In movies connection" + JSON.stringify(_))
-    return {
-      "edges" : [],
-      "pageInfo" : undefined
+  MovieConnection: {
+    pageInfo(root, args ){
+      console.log( "In movies connection pageinfo " + JSON.stringify(root))
+      return {"root" : root, "hasNextPage" : "foo"}
+    },
+    edges(root, args){
+      console.log( "In movies connection edges  " + JSON.stringify(root))
+      return [{"root" : root}]
     }
   },
 
-  MovieEdge : (obj, args, context, info) => {
-    console.log( "In movies edge" + JSON.stringify(obj))
-    return {
-      "node" : {
-        "id" : "Insert value"
-      },
-      "cursor" : "Undefined cursor"
-    }
+  MovieEdge : {
+    node( root, args ){
+      console.log( "In movies edge node " + JSON.stringify(root))
+      return {"id" : "foo"}
+    },
+    cursor( root, args ){
+      console.log( "In movies edge cursor" + JSON.stringify(root))
+      return "bar"
+    },
   },
 
   Movie:(obj, args, context, info) => {
