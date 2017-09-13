@@ -10,8 +10,8 @@ import cors from 'cors'
 
 const resolvers = {
   Query :{
-    search: (_, { input }) => {
-      console.log( "Input = " + JSON.stringify( input ) );
+    search: (_, { query }) => {
+      console.log( "Input = " + query );
       return {}
     }
   },
