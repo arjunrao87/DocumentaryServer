@@ -1,3 +1,5 @@
+require("babel-polyfill");
+
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
 var { buildSchema } = require('graphql');
@@ -10,58 +12,33 @@ import cors from 'cors'
 
 const resolvers = {
   Query : {
-    search: (root, args) => {
-      console.log( "search = " + JSON.stringify( args ) );
-      return {"MovieConnection" : args }
+    async search (root, {input}) {
+      const results = await MOVIE_DB.searchQuery( input.query );
+      return results.results; // This is an array of maps
     }
   },
 
   MovieConnection: {
     pageInfo(root, args ){
-      console.log( "In movies connection pageinfo " + JSON.stringify(root))
-      return {"root" : root, "hasNextPage" : "foo"}
+      return {"query" : root}
     },
     edges(root, args){
-      console.log( "In movies connection edges  " + JSON.stringify(root))
-      return [{"root" : root}]
+      return root // This is an array of maps
     }
   },
 
   MovieEdge : {
     node( root, args ){
-      console.log( "In movies edge node " + JSON.stringify(root))
-      return {"id" : "foo"}
+      return root // This is one of the elements of the above array because Graphql figures that out for you
     },
     cursor( root, args ){
-      console.log( "In movies edge cursor" + JSON.stringify(root))
       return "bar"
     },
   },
-
-  Movie:(obj, args, context, info) => {
-    console.log( "In Movie mode" + JSON.stringify(obj))
-  }
 };
 
 const typeDefs =
 `
-  type Movie{
-    id : ID!
-    voteCount : Int
-    video : Boolean
-    voteAverage : Float
-    title : String
-    popularity : Float
-    posterPath : String
-    originalLanguage : String
-    originalTitle : String
-    genreIds : [Int!]
-    backdropPath : String
-    adult : Boolean
-    overview : String
-    releaseDate : String
-  }
-
   type MovieConnection{
     edges: [MovieEdge],
     pageInfo: PageInfo
@@ -72,9 +49,26 @@ const typeDefs =
     cursor: ID!
   }
 
+  type Movie{
+    id : ID!
+    vote_count : Int
+    video : Boolean
+    vote_average : Float
+    title : String
+    popularity : Float
+    poster_path : String
+    original_language : String
+    original_title : String
+    genre_ids : [Int!]
+    backdrop_path : String
+    adult : Boolean
+    overview : String
+    release_date : String
+  }
+
   type PageInfo {
-    hasNextPage: Boolean!
-    hasPreviousPage: Boolean!
+    hasNextPage: Boolean
+    hasPreviousPage: Boolean
   }
 
   input SearchQuery{
