@@ -1,5 +1,7 @@
 # DocumentaryServer
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/arjunrao87/documentary-server.svg)](https://greenkeeper.io/)
+
 ## Server infrastructure to help you search documentaries
 
 ### FB Bot available at
