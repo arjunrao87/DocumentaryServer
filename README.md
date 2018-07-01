@@ -3,57 +3,57 @@
 #### Sample query
 
 ```
-query name {
+fragment movieFragment on Movie {
+  id
+  adult
+  backdrop_path
+  original_language
+  original_title
+  overview
+  popularity
+  poster_path
+  release_date
+  title
+  video
+  vote_average
+  vote_count
+}
+
+query get {
   searchByName(name: "Jack Reacher") {
-    id
-    vote_count
-    video
-    vote_average
-    title
-    popularity
-    poster_path
-    original_language
-    original_title
+    ...movieFragment
     genre_ids
-    backdrop_path
-    adult
-    overview
-    release_date
   }
 }
 
 query id {
   searchByID(id: "75780") {
-    id
-    vote_count
-    video
-    vote_average
-    title
-    popularity
-    poster_path
-    original_language
-    original_title
+    ...movieFragment
     genres {
       id
+      name
     }
     belongs_to_collection {
       id
+      name
+      poster_path
+      backdrop_path
     }
     video
     videos {
       id
       site
+      iso_639_1
+      iso_3166_1
+      key
+      name
     }
     production_companies {
       id
+      name
     }
-    backdrop_path
-    adult
-    overview
-    release_date
   }
 }
-
 ```
 
 *Additional queries*
