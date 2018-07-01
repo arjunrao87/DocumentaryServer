@@ -55,3 +55,6 @@ query id {
 }
 
 ```
+
+*Additional queries*
+https://developers.themoviedb.org/3/getting-started/search-and-query-for-details

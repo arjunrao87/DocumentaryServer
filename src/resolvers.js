@@ -1,15 +1,16 @@
-const MOVIE_DB = require('./moviedb');
+import rp from 'request-promise'
+const BASE_URL = "https://api.themoviedb.org/3/"
+const API_KEY = "3441b7624a92e83675247a43dad1ee91";
+const SEARCH_URL = BASE_URL + "search/movie?api_key=" + API_KEY + "&query="
+const DETAILS_URL = "?api_key="+ API_KEY + "&append_to_response=videos";
 
 const resolvers = {
     Query : {
-      async searchByName (root, {name}) {
-        const results = await MOVIE_DB.searchQuery( name );
-        return results.results; // This is an array of maps
+       searchByName : async (root, {name}) => {
+        const {results} = await searchQuery( name );
+        return results
       },
-      async searchByID(root, {id}){
-        const results = await MOVIE_DB.getMovieDetailsForId( id );
-        return results; // This is a map
-      }
+      searchByID : (root, {id}) => getMovieDetailsForId( id )
     },
 
     MovieDetail : {
@@ -19,4 +20,24 @@ const resolvers = {
     }
   };
 
-  export default resolvers;
+const searchQuery = query => {
+  const url = SEARCH_URL + query;
+  var options = {
+    method: 'GET',
+    uri: url,
+    json: true
+  };
+  return rp( options );
+}
+
+const getMovieDetailsForId = id =>{
+  const url = BASE_URL + `movie/${id}` + DETAILS_URL;
+  var options = {
+    method: 'GET',
+    uri: url,
+    json: true
+  };
+  return rp( options );
+}
+
+export default resolvers;
