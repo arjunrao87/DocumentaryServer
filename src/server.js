@@ -1,5 +1,5 @@
 require("babel-polyfill");
-
+require("dotenv").config()
 const express = require('express');
 import { makeExecutableSchema } from 'graphql-tools';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
@@ -17,7 +17,7 @@ const GRAPHQL_PORT = 3000;
 
 const graphQLServer = express().use('*',cors());
 
-graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({ schema:schema, context:{} }));
+graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({ schema:schema, context:{apiKey:`${process.env.MOVIE_DB_API_KEY}`}}));
 graphQLServer.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 graphQLServer.listen(GRAPHQL_PORT, () => console.log(

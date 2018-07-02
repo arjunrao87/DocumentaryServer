@@ -1,43 +1,37 @@
-import rp from 'request-promise'
+import rp from "request-promise"
+
 const BASE_URL = "https://api.themoviedb.org/3/"
-const API_KEY = "3441b7624a92e83675247a43dad1ee91";
-const SEARCH_URL = BASE_URL + "search/movie?api_key=" + API_KEY + "&query="
-const DETAILS_URL = "?api_key="+ API_KEY + "&append_to_response=videos";
 
 const resolvers = {
     Query : {
-       searchByName : async (root, {name}) => {
-        const {results} = await searchQuery( name );
-        return results
-      },
-      searchByID : (root, {id}) => getMovieDetailsForId( id )
+        searchByName : async (root, {name}, context) => {
+            const {results} = await searchByName( name, context.apiKey );
+            return results;
+        },
+        searchByID : (root, {id}, context ) => searchByID( id, context.apiKey )
     },
 
     MovieDetail : {
-      videos( root, args ){
+        videos( root, args ){
         return root.videos.results
-      }
+        }
     }
-  };
+};
 
-const searchQuery = query => {
-  const url = SEARCH_URL + query;
-  var options = {
-    method: 'GET',
-    uri: url,
-    json: true
-  };
-  return rp( options );
+const searchByName = ( name, apiKey ) => {
+    return query(`${BASE_URL}search/movie?api_key=${apiKey}&query=${name}`);
 }
 
-const getMovieDetailsForId = id =>{
-  const url = BASE_URL + `movie/${id}` + DETAILS_URL;
-  var options = {
-    method: 'GET',
-    uri: url,
-    json: true
-  };
-  return rp( options );
+const searchByID = ( id, apiKey ) => {
+    return query(`${BASE_URL}movie/${id}?api_key=${apiKey}&append_to_response=videos`);
 }
 
+const query = url => {
+    return rp({
+        method: 'GET',
+        uri: url,
+        json: true
+    });
+}
+  
 export default resolvers;
